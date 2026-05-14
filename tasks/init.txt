@@ -1,0 +1,53 @@
+This is blank repository.
+
+We build React daterange picker. 
+Create minimal react sandbox project and lets develop daterange picker component.
+We will use this component in other products later. It should be developed in portable way to support easy configuration and usage in other React projects.
+Lets not use any third party components / libraries, everything should be developed natively with standart React stack and rules. 
+It should be possible to customize component colors and styles by alternative css. 
+
+It should look like widget @widget.png. 
+
+When widget is minimized (we place it in table headers, search forms etc) it should look like plain input with set daterange. 
+For example [ 2025-04-15 14:35:05 - 2025-05-15 15:00:00 ].
+
+When I click it, main widget body is displayed under the input. 
+It is always should be possible to manually type into input, update and edit value just by typing and navigating with the keyboard. 
+It should support editing up to seconds. 
+
+Timestamp from should always be less than equal to timestamp to. 
+Invalid input should trigger (!) mark and red glow around input field.
+
+On the left sidebar of the widget it should be preconfigured useful dateranges. 
+
+Split by categories
+## Operational & Real-Time
+
+* Last 15 Minutes
+* Last 1 Hour
+* Last 24 Hours
+* Today
+* Yesterday
+
+## Rolling Trends
+
+* Last 7 Days
+* Last 30 Days
+* Last 90 Days
+* Last 365 Days
+
+## Calendar-Based
+
+* This Week
+* This Month
+* Last Month
+
+## Financial & Executive
+
+* This Quarter
+* Last Quarter
+* Year to Date (YTD)
+* Trailing 12 Months (TTM)
+
+
+
