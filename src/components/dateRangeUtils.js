@@ -31,6 +31,7 @@ export function createRange(start, end) {
 }
 
 export function parseDateTime(value) {
+  // Parse the exact manual input format and reject overflowed JS dates.
   const match = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.exec(
     value.trim(),
   );
@@ -183,6 +184,7 @@ export function setTimeParts(date, value) {
 }
 
 export function getMonthMatrix(monthDate) {
+  // Render a stable 6-row grid so both calendars keep a consistent height.
   const first = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
   const firstDay = first.getDay();
   const firstCell = addDays(first, -firstDay);
@@ -208,6 +210,7 @@ export function getDayNames() {
 }
 
 export function buildDefaultPresets(now = new Date()) {
+  // Presets are grouped for menu rendering, but each item is just a plain range.
   const todayStart = startOfDay(now);
   const todayEnd = endOfDay(now);
   const yesterday = addDays(now, -1);

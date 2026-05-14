@@ -1,53 +1,117 @@
-This is blank repository.
+Build a portable React date range picker project from scratch in an empty repository.
 
-We build React daterange picker. 
-Create minimal react sandbox project and lets develop daterange picker component.
-We will use this component in other products later. It should be developed in portable way to support easy configuration and usage in other React projects.
-Lets not use any third party components / libraries, everything should be developed natively with standart React stack and rules. 
-It should be possible to customize component colors and styles by alternative css. 
+Use a minimal React sandbox setup suitable for local development and demoing the component. Do not use third-party UI/date-picker libraries. Build everything with standard React, native JavaScript `Date`, and plain CSS.
 
-It should look like widget @widget.png. 
+Product goals:
 
-When widget is minimized (we place it in table headers, search forms etc) it should look like plain input with set daterange. 
-For example [ 2025-04-15 14:35:05 - 2025-05-15 15:00:00 ].
+1. Create a reusable `DateRangePicker` component intended to be copied or integrated into other React projects later.
+2. Keep styling portable and overridable with CSS variables / alternative CSS.
+3. Provide a live manual/demo page that explains how to use the component in other projects, with examples and code snippets.
 
-When I click it, main widget body is displayed under the input. 
-It is always should be possible to manually type into input, update and edit value just by typing and navigating with the keyboard. 
-It should support editing up to seconds. 
+Component behavior:
 
-Timestamp from should always be less than equal to timestamp to. 
-Invalid input should trigger (!) mark and red glow around input field.
+1. Collapsed state should look like a plain text input showing the current range in exact format:
+   `YYYY-MM-DD HH:mm:ss - YYYY-MM-DD HH:mm:ss`
+2. The input must always be manually editable by keyboard.
+3. Precision must include seconds.
+4. Clicking the input or calendar icon should open the widget under the input.
+5. Pressing `Enter` should apply valid typed input.
+6. Pressing `Escape` should cancel draft changes and close the popup.
+7. Clicking `Apply` should close the popup.
+8. Invalid input must show a red glow and `!` indicator.
+9. The invariant `start <= end` must always be enforced.
 
-On the left sidebar of the widget it should be preconfigured useful dateranges. 
+Popup layout and behavior:
 
-Split by categories
-## Operational & Real-Time
+1. Render the popup below the input.
+2. Include a left preset sidebar and two visible calendars in the main area.
+3. The left and right calendars must be independent in navigation.
+4. Each calendar header must show both `<` and `>` controls.
+5. Left calendar edits only the `start` date.
+6. Right calendar edits only the `end` date.
+7. Editing one calendar must not accidentally require double-clicking or visually desync the other side.
+8. Left visible month should sync from `start`; right visible month should sync from `end`.
+9. Include separate `From` and `To` time inputs below the calendars, using `HH:mm:ss`.
+10. Footer should show the currently drafted full range plus `Cancel` and `Apply` buttons.
 
-* Last 15 Minutes
-* Last 1 Hour
-* Last 24 Hours
-* Today
-* Yesterday
+Preset sidebar:
 
-## Rolling Trends
+1. Presets should be grouped by category.
+2. Sidebar categories should remain collapsed by default.
+3. Hovering or focusing a category should show a flyout submenu with that category’s items.
+4. Only one submenu may be open at a time.
+5. When mouse/focus leaves the category/menu block, the submenu should collapse.
 
-* Last 7 Days
-* Last 30 Days
-* Last 90 Days
-* Last 365 Days
+Default preset categories and items:
 
-## Calendar-Based
+Operational
+- Last 15 Minutes
+- Last 1 Hour
+- Last 24 Hours
+- Today
+- Yesterday
 
-* This Week
-* This Month
-* Last Month
+Rolling Trends
+- Last 7 Days
+- Last 30 Days
+- Last 90 Days
+- Last 365 Days
 
-## Financial & Executive
+Calendar-Based
+- This Week
+- This Month
+- Last Month
 
-* This Quarter
-* Last Quarter
-* Year to Date (YTD)
-* Trailing 12 Months (TTM)
+Financial & Executive
+- This Quarter
+- Last Quarter
+- Year to Date (YTD)
+- Trailing 12 Months (TTM)
 
+Visual / UX requirements:
 
+1. Base visual direction should resemble a compact analytical/reporting widget.
+2. Keep the widget visually condensed so it fits well into toolbars, filter bars, search forms, and table headers.
+3. Show a calendar icon on the right side of the input; it must be clickable.
+4. Keep the input and live selected-value preview visually aligned on the manual page.
+5. The code examples on the manual page should have lightweight colored syntax highlighting without bringing in a syntax-highlighting dependency.
 
+API expectations:
+
+1. Support controlled usage via `value` and `onChange`.
+2. Support uncontrolled usage via `defaultValue`.
+3. Support `onApply`.
+4. Support custom preset groups through a `presets` prop.
+5. Support `className` for wrapper-level styling.
+6. Export a helper like `createRange()` for convenient initialization from strings.
+
+Implementation notes:
+
+1. Keep internal code understandable and maintainable.
+2. Add comments where behavior is non-obvious, especially around:
+   - controlled vs uncontrolled updates
+   - independent calendar roles
+   - month synchronization
+   - preset flyout behavior
+   - manual parsing / validation rules
+3. Use a stable 6-row month grid for consistent calendar height.
+
+Manual / documentation page:
+
+Build a full-page manual/demo instead of a tiny sandbox card. Include:
+
+1. Hero section with live example.
+2. Current selected value preview.
+3. Short “Try It” instructions.
+4. Quick start example for controlled usage.
+5. Example of custom presets.
+6. Styling/theming snippet using CSS variables.
+7. Integration checklist.
+8. Small props/API reference.
+
+Repository hygiene:
+
+1. Add `.gitignore`.
+2. Ignore at least `node_modules/` and `dist/`.
+
+Deliverable should be a working React project that can be run locally and demonstrates the full component and its integration guidance.

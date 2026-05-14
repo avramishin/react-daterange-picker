@@ -47,12 +47,14 @@ export function DateRangePicker({
 
   const rootRef = useRef(null);
   const inputRef = useRef(null);
+  // Refocus after Apply / icon clicks without immediately reopening on focus.
   const suppressNextFocusOpenRef = useRef(false);
   const popupId = useId();
 
   const activeRange = isControlled ? committed : internalRange;
 
   useEffect(() => {
+    // External value changes should fully reset the popup draft state.
     setInputValue(formatRange(activeRange));
     setDraftRange(activeRange);
     syncVisibleMonths(activeRange);
@@ -73,6 +75,7 @@ export function DateRangePicker({
   }, []);
 
   function commitRange(nextRange, options = {}) {
+    // Keep controlled and uncontrolled modes behind the same write path.
     if (!isControlled) {
       setInternalRange(nextRange);
     }
@@ -140,6 +143,7 @@ export function DateRangePicker({
   }
 
   function handleDayClick(which, day) {
+    // Calendars are role-based: left edits start, right edits end.
     if (which === "start") {
       const nextStart = withDate(draftRange.start, day);
       const nextRange =
@@ -200,6 +204,8 @@ export function DateRangePicker({
     syncTimeText = true,
     syncMonths = true,
   ) {
+    // Widget interactions can update the draft without forcing month navigation
+    // back to the selected range, which would make calendar browsing feel jumpy.
     setDraftRange(nextRange);
     setSelectionTarget(nextTarget);
     if (syncTimeText) {
@@ -216,6 +222,7 @@ export function DateRangePicker({
   }
 
   function syncVisibleMonths(range) {
+    // Keep each calendar anchored to its own side of the selected range.
     setLeftVisibleMonth(
       new Date(range.start.getFullYear(), range.start.getMonth(), 1),
     );
@@ -243,6 +250,7 @@ export function DateRangePicker({
   }
 
   function handlePresetGroupBlur(event) {
+    // Only close the flyout when focus leaves the whole preset group.
     if (!event.currentTarget.contains(event.relatedTarget)) {
       setActivePresetGroup(null);
     }

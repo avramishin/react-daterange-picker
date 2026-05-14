@@ -277,6 +277,7 @@ function CodeBlock({ code }) {
   return (
     <pre className="manual-code">
       <code>
+        {/* Lightweight syntax highlighting keeps the docs dependency-free. */}
         {highlightCode(code).map((token, index) => (
           <span
             key={`${token.type}-${index}`}
@@ -303,6 +304,8 @@ function PropRow({ name, type, description }) {
 }
 
 function highlightCode(code) {
+  // This is intentionally small and heuristic-based; it only targets the
+  // snippet shapes used on this manual page, not arbitrary JavaScript parsing.
   const pattern =
     /("([^"\\]|\\.)*"|'([^'\\]|\\.)*'|`([^`\\]|\\.)*`|\b(import|from|export|function|return|const|let|var|new)\b|<\/?[A-Z][A-Za-z0-9]*|\b(useState|DateRangePicker|createRange|console)\b|\b(onApply|onChange|value|presets|label|items|range|start|end|className)\b|[()[\]{}]|=>|<\/|\/>|\.\/[\w/-]+(?:\.\w+)?|--[\w-]+|#[0-9a-fA-F]{3,6}|\b\d{2,4}(?::\d{2}){1,2}\b|\b\d+\b)/g;
 
