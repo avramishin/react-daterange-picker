@@ -55,7 +55,7 @@ export function DateRangePicker({
   useEffect(() => {
     setInputValue(formatRange(activeRange));
     setDraftRange(activeRange);
-    syncVisibleMonths(activeRange.start);
+    syncVisibleMonths(activeRange);
     setStartTimeText(formatTime(activeRange.start));
     setEndTimeText(formatTime(activeRange.end));
   }, [activeRange]);
@@ -93,7 +93,7 @@ export function DateRangePicker({
       setDraftRange(parsed.range);
       setStartTimeText(formatTime(parsed.range.start));
       setEndTimeText(formatTime(parsed.range.end));
-      syncVisibleMonths(parsed.range.start);
+      syncVisibleMonths(parsed.range);
       commitRange(parsed.range);
     }
   }
@@ -207,7 +207,7 @@ export function DateRangePicker({
       setEndTimeText(formatTime(nextRange.end));
     }
     if (syncMonths) {
-      syncVisibleMonths(nextRange.start);
+      syncVisibleMonths(nextRange);
     }
     if (syncInput) {
       setInputValue(formatRange(nextRange));
@@ -215,10 +215,13 @@ export function DateRangePicker({
     }
   }
 
-  function syncVisibleMonths(anchorDate) {
-    const leftMonth = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), 1);
-    setLeftVisibleMonth(leftMonth);
-    setRightVisibleMonth(addMonths(leftMonth, 1));
+  function syncVisibleMonths(range) {
+    setLeftVisibleMonth(
+      new Date(range.start.getFullYear(), range.start.getMonth(), 1),
+    );
+    setRightVisibleMonth(
+      new Date(range.end.getFullYear(), range.end.getMonth(), 1),
+    );
   }
 
   function handleApply() {
